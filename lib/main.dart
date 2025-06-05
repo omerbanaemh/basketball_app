@@ -5,9 +5,29 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int teamAPoints = 0;
+  int teamBPoints = 0;
+
+  void increment(int num, String AB) {
+    setState(() {
+      switch (AB) {
+        case 'A':
+          teamAPoints += num;
+          break;
+        case 'B':
+          teamBPoints += num;
+          break;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +54,24 @@ class MyApp extends StatelessWidget {
                         fontSize: 42,
                       ),
                     ),
-                    const Text(
-                      '0',
-                      style: TextStyle(
-                        fontSize: 200,
+                    Text(
+                      '$teamAPoints',
+                      style: const TextStyle(
+                        fontSize: 150,
                       ),
                     ),
-                    CounterButton(text: 'Add 1 Point', fun: () {  },),
+                    CounterButton(
+                        text: 'Add 1 Point', fun: () => increment(1, 'A')),
                     const SizedBox(
                       height: 16,
                     ),
-                    CounterButton(text: 'Add 2 Point', fun: () {  },),
+                    CounterButton(
+                      text: 'Add 2 Point', fun: () => increment(2, 'A')),
                     const SizedBox(
                       height: 16,
                     ),
-                    CounterButton(text: 'Add 3 Point', fun: () {  },),
+                    CounterButton(
+                      text: 'Add 3 Point', fun: () => increment(3, 'A')),
                   ],
                 ),
                 const SizedBox(
@@ -66,27 +89,38 @@ class MyApp extends StatelessWidget {
                         fontSize: 42,
                       ),
                     ),
-                    const Text(
-                      '0',
-                      style: TextStyle(
-                        fontSize: 200,
+                    Text(
+                      '$teamBPoints',
+                      style: const TextStyle(
+                        fontSize: 150,
                       ),
                     ),
-                    CounterButton(text: 'Add 1 Point', fun: () {  },),
+                    CounterButton(
+                      text: 'Add 1 Point', fun: () => increment(1, 'B')),
                     const SizedBox(
                       height: 16,
                     ),
-                    CounterButton(text: 'Add 2 Point', fun: () {  },),
+                    CounterButton(
+                      text: 'Add 2 Point', fun: () => increment(2, 'B')),
                     const SizedBox(
                       height: 16,
                     ),
-                    CounterButton(text: 'Add 3 Point', fun: () {  },),
+                    CounterButton(
+                      text: 'Add 3 Point', fun: () => increment(3, 'B')),
                   ],
                 ),
               ],
             ),
             const Spacer(),
-            CounterButton(text: 'Add 1 Point', fun: () {  },),
+            CounterButton(
+              text: 'Add 1 Point',
+              fun: () {
+                setState(() {
+                  teamAPoints++;
+                  teamBPoints++;
+                });
+              },
+            ),
             const Spacer(),
           ],
         ),
@@ -94,4 +128,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
